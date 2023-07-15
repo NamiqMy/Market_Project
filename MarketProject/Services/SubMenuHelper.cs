@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarketProject.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace MarketProject
     public static class SubMenuHelper
     {
         public static void ProductSubMenu()
-        {
+        {            
             Console.Clear();
             int option;
             do
@@ -18,7 +19,7 @@ namespace MarketProject
                 Console.WriteLine("2. Edit the product");
                 Console.WriteLine("3. Delete the product");
                 Console.WriteLine("4. Show all products");
-                Console.WriteLine("5. Show products by category");
+                Console.WriteLine("5. Show products according to category");
                 Console.WriteLine("6. Show products by price range");
                 Console.WriteLine("7. Search products by name");
                 Console.WriteLine("0. Exit");
@@ -36,19 +37,24 @@ namespace MarketProject
                 switch (option)
                 {
                     case 1:
+                        MenuService.MenuAddProduct();
                         Console.WriteLine("Added new product");
                         break;
                     case 2:
+                        MenuService.MenuEditProduct();
                         Console.WriteLine("Edited the product");
                         break;
                     case 3:
+                        MenuService.MenuDeleteProduct();
                         Console.WriteLine("Deleted the product");
                         break;
                     case 4:
+                        MenuService.MenuProducts();
                         Console.WriteLine("Shown all products");
                         break;
                     case 5:
-                        Console.WriteLine("Shown products by category");
+                        MenuService.MenuShowProductsAccordingtoCatogeries();
+                        Console.WriteLine("Shown products according to category");
                         break;
                     case 6:
                         Console.WriteLine("Shown products by price range");
@@ -76,11 +82,11 @@ namespace MarketProject
                 Console.WriteLine("1. Add new sale");
                 Console.WriteLine("2. Return of product");
                 Console.WriteLine("3. Deletion of sale");
-                Console.WriteLine("4. Display of all sales");
-                Console.WriteLine("5. Display of sales for a given date range");
-                Console.WriteLine("6. Display sales by given amount range");
+                Console.WriteLine("4. Show all sales");
+                Console.WriteLine("5. Show sales for a given date range");
+                Console.WriteLine("6. Show sales by given amount range");
                 Console.WriteLine("7. Showing sales for a given date");
-                Console.WriteLine("8. Displaying sales information based on a given number");
+                Console.WriteLine("8. Show sales information based on a given number");
                 Console.WriteLine("0. Go back");
 
                 Console.WriteLine("-----------");
@@ -96,15 +102,19 @@ namespace MarketProject
                 switch (option)
                 {
                     case 1:
-                        Console.WriteLine("Added neü sale");
+                        
+                        Console.WriteLine("Added new sale");
                         break;
                     case 2:
+                        
                         Console.WriteLine("The product was returned");
                         break;
                     case 3:
+                        
                         Console.WriteLine("The product has been deleted");
                         break;
                     case 4:
+                        
                         Console.WriteLine("Displayed all sales");
                         break;
                         case 5:

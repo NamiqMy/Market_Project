@@ -17,10 +17,12 @@ namespace MarketProject.Common.Models
             _count++;
         }
 
-        public string Pr_Name { get; set; }
-        public double Pr_Price { get; set;}
-        public int Pr_Count { get; set; }
-        public int Pr_Code { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set;}
+        public int Quantity { get; set; }        
         public Category Category { get; set; }
+        public List<Product> Products { get; set; }
+        
     }
+    
 }

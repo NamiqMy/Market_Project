@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace MarketProject.Common.Enum
 {
-    internal class Category
+    public enum Category
     {
+        Fruit_and_Vegetable,
+        Alcoholic_Beverages,
+        NonAlcoholic_Beverages,
+        Flour_Products,
+        Clothing,
+        Toys,
+        Gastronomy,
     }
 }

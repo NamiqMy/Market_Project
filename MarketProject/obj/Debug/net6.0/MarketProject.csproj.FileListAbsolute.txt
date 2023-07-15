@@ -1,0 +1,17 @@
+C:\Users\ynami\OneDrive\Desktop\MarketProject\MarketProject\bin\Debug\net6.0\MarketProject.exe
+C:\Users\ynami\OneDrive\Desktop\MarketProject\MarketProject\bin\Debug\net6.0\MarketProject.deps.json
+C:\Users\ynami\OneDrive\Desktop\MarketProject\MarketProject\bin\Debug\net6.0\MarketProject.runtimeconfig.json
+C:\Users\ynami\OneDrive\Desktop\MarketProject\MarketProject\bin\Debug\net6.0\MarketProject.dll
+C:\Users\ynami\OneDrive\Desktop\MarketProject\MarketProject\bin\Debug\net6.0\MarketProject.pdb
+C:\Users\ynami\OneDrive\Desktop\MarketProject\MarketProject\bin\Debug\net6.0\ConsoleTables.dll
+C:\Users\ynami\OneDrive\Desktop\MarketProject\MarketProject\obj\Debug\net6.0\MarketProject.csproj.AssemblyReference.cache
+C:\Users\ynami\OneDrive\Desktop\MarketProject\MarketProject\obj\Debug\net6.0\MarketProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ynami\OneDrive\Desktop\MarketProject\MarketProject\obj\Debug\net6.0\MarketProject.AssemblyInfoInputs.cache
+C:\Users\ynami\OneDrive\Desktop\MarketProject\MarketProject\obj\Debug\net6.0\MarketProject.AssemblyInfo.cs
+C:\Users\ynami\OneDrive\Desktop\MarketProject\MarketProject\obj\Debug\net6.0\MarketProject.csproj.CoreCompileInputs.cache
+C:\Users\ynami\OneDrive\Desktop\MarketProject\MarketProject\obj\Debug\net6.0\MarketProject.csproj.CopyComplete
+C:\Users\ynami\OneDrive\Desktop\MarketProject\MarketProject\obj\Debug\net6.0\MarketProject.dll
+C:\Users\ynami\OneDrive\Desktop\MarketProject\MarketProject\obj\Debug\net6.0\refint\MarketProject.dll
+C:\Users\ynami\OneDrive\Desktop\MarketProject\MarketProject\obj\Debug\net6.0\MarketProject.pdb
+C:\Users\ynami\OneDrive\Desktop\MarketProject\MarketProject\obj\Debug\net6.0\MarketProject.genruntimeconfig.cache
+C:\Users\ynami\OneDrive\Desktop\MarketProject\MarketProject\obj\Debug\net6.0\ref\MarketProject.dll

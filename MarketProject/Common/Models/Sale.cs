@@ -1,4 +1,5 @@
 ﻿using MarketProject.Common.Base;
+using MarketProject.Common.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,7 @@ namespace MarketProject.Common.Models
         public int Number { get; set; }
         public decimal Amount { get; set; }
         public int SalesItems {get; set; }
-        public DateTime Date { get; set; }
-        public  List<Product> Products { get; set; }
+        public DateTime Date { get; set; }      
 
     }
 }

@@ -53,7 +53,7 @@ namespace MarketProject
                         Console.WriteLine("Shown all products");
                         break;
                     case 5:
-                        MenuService.MenuShowProductsAccordingtoCatogeries();
+                        MenuService.MenuShowProductsAccordingtoCategory();
                         Console.WriteLine("Shown products according to category");
                         break;
                     case 6:

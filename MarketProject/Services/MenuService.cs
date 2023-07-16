@@ -128,29 +128,59 @@ namespace MarketProject.Services
                 Console.WriteLine("There are some errors appeared!");
                 Console.WriteLine(ex.Message);
             }
-        }      
+        }
 
-        public static void MenuShowProductsAccordingtoCatogeries()
+        #endregion
+
+        #region Sale
+
+        public static void MenuSaleItem()
         {
             try
             {
-                Console.WriteLine("Showl products by categories: ");
-                string selectedCategory = Console.ReadLine();
+                var saleItems = marketService.GetSales();
+                var table = new ConsoleTable("Id","Qauntity");
 
-                Console.WriteLine("Available categories:");
-                foreach (var category in selectedCategory)
+                if (saleItems.Count == 0) 
                 {
-                    Console.WriteLine(category);
+                    Console.WriteLine("No sales yet!");
+                    return;
                 }
-            }
 
-            catch (Exception ex)
+                foreach ( var item in saleItems )
+                {
+                    table.AddRow(item.Id, item.Name, item.Quantity);
+                }
+
+                table.Write();
+            }
+            catch (Exception)
             {
-                Console.WriteLine("There are some errors appeared!");
-                Console.WriteLine(ex.Message);
+
+                throw;
             }
         }
 
+        public static void Sale()
+        {
+            try
+            {
+                Console.WriteLine("Enter product's name: ");
+                string name = Console.ReadLine();
+
+                Console.WriteLine("Enter product's price: ");
+                decimal price = decimal.Parse(Console.ReadLine());
+
+                Console.WriteLine("Enter product's quantity: ");
+                int quantity = int.Parse(Console.ReadLine());
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
         #endregion
 

@@ -129,7 +129,28 @@ namespace MarketProject.Services
             return data;
         }
 
+        public List<Sale> GetSales()
+        {
+            return Sales;
+        }
 
+        public int AddSale(int Id, string name, int quantity)
+        {
+
+            if (int.TryParse(name, out int id)) 
+            throw new ArgumentException("There are no any product with this ID: ");
+
+            if (string.IsNullOrWhiteSpace(name))
+                throw new FormatException("Name is empty!");
+
+            if (quantity < 0)
+                throw new FormatException("The quantity of products can not be lower than zero!");
+
+            
+
+            return id;
+
+        }
     }
 
     

@@ -8,18 +8,27 @@ using System.Threading.Tasks;
 
 namespace MarketProject.Common.Models
 {
-    public class Sale : BaseEntity
+    public class Sale
     {
-        public static int _count = 0;
-        public Sale() 
+        private static int _count = 0;
+
+        public Sale()
         {
-            Id = _count;
+            Number = _count;
             _count++;
         }
+
+        public Sale(decimal amount, List<SaleItem> saleItems)
+        {
+            Number = _count;
+            Amount = amount;
+            SaleItems = saleItems;
+            _count++;
+        }
+
         public int Number { get; set; }
         public decimal Amount { get; set; }
-        public int SalesItems {get; set; }
-        public DateTime Date { get; set; }      
-
+        public List<SaleItem> SaleItems { get; set; }
+        public DateTime SaleTime { get; set; } = DateTime.Now;
     }
 }

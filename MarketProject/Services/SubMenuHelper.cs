@@ -9,84 +9,19 @@ namespace MarketProject
 {
     public static class SubMenuHelper
     {
-        public static void ProductSubMenu()
-        {            
-            Console.Clear();
-            int option;
-            do
-            {
-                Console.WriteLine("1. Add new product");
-                Console.WriteLine("2. Edit the product");
-                Console.WriteLine("3. Delete the product");
-                Console.WriteLine("4. Show all products");
-                Console.WriteLine("5. Show products according to category");
-                Console.WriteLine("6. Show products by price range");
-                Console.WriteLine("7. Search products by name");
-                Console.WriteLine("0. Exit");
-
-                Console.WriteLine("-----------");
-                Console.WriteLine("Enter option:");
-
-                while (!int.TryParse(Console.ReadLine(), out option))
-                {
-                    Console.WriteLine("Invalid number!");
-                    Console.WriteLine("-----------");
-                    Console.WriteLine("Enter option:");
-                }
-
-                switch (option)
-                {
-                    case 1:
-                        MenuService.MenuAddProduct();
-                        Console.WriteLine("Added new product");
-                        break;
-                    case 2:
-                        MenuService.MenuEditProduct();
-                        Console.WriteLine("Edited the product");
-                        break;
-                    case 3:
-                        MenuService.MenuDeleteProduct();
-                        Console.WriteLine("Deleted the product");
-                        break;
-                    case 4:
-                        MenuService.MenuProducts();
-                        Console.WriteLine("Shown all products");
-                        break;
-                    case 5:
-                        MenuService.MenuShowProductsAccordingtoCategory();
-                        Console.WriteLine("Shown products according to category");
-                        break;
-                    case 6:
-                        Console.WriteLine("Shown products by price range");
-                        break;
-                    case 7:
-                        Console.WriteLine("Searched products by name");
-                        break;
-                    case 0:
-                        break;
-                    default:
-                        Console.WriteLine("There is no such option!");
-                        break;
-                }
-
-            } while (option != 0);
-
-        }
-
-        public static void SaleSubMenu()
+        public static void ProductsSubMenu()
         {
             Console.Clear();
             int option;
             do
             {
-                Console.WriteLine("1. Add new sale");
-                Console.WriteLine("2. Return of product");
-                Console.WriteLine("3. Deletion of sale");
-                Console.WriteLine("4. Show all sales");
-                Console.WriteLine("5. Show sales for a given date range");
-                Console.WriteLine("6. Show sales by given amount range");
-                Console.WriteLine("7. Showing sales for a given date");
-                Console.WriteLine("8. Show sales information based on a given number");
+                Console.WriteLine("1. Add product");
+                Console.WriteLine("2. Update product");
+                Console.WriteLine("3. Delete product");
+                Console.WriteLine("4. Show all products");
+                Console.WriteLine("5. Show products according to their categories");
+                Console.WriteLine("6. Show products according to their price interval");
+                Console.WriteLine("7. Find products according to their name");
                 Console.WriteLine("0. Go back");
 
                 Console.WriteLine("-----------");
@@ -102,32 +37,102 @@ namespace MarketProject
                 switch (option)
                 {
                     case 1:
-                        
-                        Console.WriteLine("Added new sale");
+                        MenuService.MenuAddProduct();
+                        Console.WriteLine("Added product");
                         break;
                     case 2:
-                        
-                        Console.WriteLine("The product was returned");
+                        MenuService.UpdateProduct();
+                        Console.WriteLine("Updated product");
                         break;
                     case 3:
-                        
-                        Console.WriteLine("The product has been deleted");
+                        MenuService.MenuDeleteProduct();
+                        Console.WriteLine("Deleted product");
                         break;
                     case 4:
-                        
-                        Console.WriteLine("Displayed all sales");
+                        MenuService.MenuProducts();
+                        Console.WriteLine("Showing all products");
                         break;
-                        case 5:
-                        Console.WriteLine("Displayed of sales for a given date range");
+                    case 5:
+                        MenuService.MenuShowProductAccordingToCategory();
+                        Console.WriteLine("Showing products according to their categories");
                         break;
-                        case 6:
-                        Console.WriteLine("Displayed sales by given amount range");
+                    case 6:
+                        MenuService.MenuProductAccordingToPriceInterval();
+                        Console.WriteLine("Showing products according to their price interval");
                         break;
-                        case 7:
-                        Console.WriteLine("Showed sales for a given date");
+                    case 7:
+                        MenuService.MenuProductAccordingToName();
+                        Console.WriteLine("Finding products according to their name");
                         break;
-                        case 8:
-                        Console.WriteLine("Displayed sales information based on a given number");
+                    case 0:
+                        break;
+                    default:
+                        Console.WriteLine("There is no such option!");
+                        break;
+                }
+
+            } while (option != 0);
+        }
+
+        public static void SalesSubMenu()
+        {
+            Console.Clear();
+            int option;
+            do
+            {
+                Console.WriteLine("1. Add sale");
+                Console.WriteLine("2. Decline sale");
+                Console.WriteLine("3. Remove sale");
+                Console.WriteLine("4. Show all sales");
+                Console.WriteLine("5. Show sales according to their time interval");
+                Console.WriteLine("6. Show sales according to their price interval");
+                Console.WriteLine("7. Show sales on the given date");
+                Console.WriteLine("8. Show sales according to their numbers");
+                Console.WriteLine("0. Go back...");
+                Console.WriteLine("-----------");
+                Console.WriteLine("Enter option:");
+
+                while (!int.TryParse(Console.ReadLine(), out option))
+                {
+                    Console.WriteLine("Invalid number!");
+                    Console.WriteLine("-----------");
+                    Console.WriteLine("Enter option:");
+                }
+
+                switch (option)
+                {
+                    case 1:
+                        Console.WriteLine("Added sale");
+                        MenuService.MenuAddSales();
+                        break;
+                    case 2:
+                        Console.WriteLine("Refund sale");
+                        MenuService.RefundProduct();
+                        break;
+                    case 3:
+                        Console.WriteLine("Removed sale");
+                        MenuService.RemoveSale();
+                        break;
+                    case 4:
+                        Console.WriteLine("Showing all sales");
+                        MenuService.MenuShowAllSales();
+                        break;
+                    case 5:
+                        Console.WriteLine("Showing sales according to their time interval");
+                        MenuService.ShowSaleByTimeInterval();
+                        break;
+                    case 6:
+                        Console.WriteLine("Showing sales according to their price interval");
+                        MenuService.ShowSaleByPriceInterval();
+                        break;
+                    case 7:
+                        Console.WriteLine("Showing sales on the given date");
+                        break;
+                    case 8:
+                        Console.WriteLine("Show sales according to their numbers");
+                        MenuService.MenuShowAllSales();
+                        var currentSaleId = Int32.Parse(Console.ReadLine());
+                        MenuService.ShowSaleDetailsById(currentSaleId);
                         break;
                     case 0:
                         break;

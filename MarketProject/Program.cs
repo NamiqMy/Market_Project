@@ -10,7 +10,7 @@ namespace MarketProject
 
             do
             {
-                Console.WriteLine("1. Products");                
+                Console.WriteLine("1. Transaction on products");                
                 Console.WriteLine("2. Sales of product");                
                 Console.WriteLine("0. Exit");
                 Console.WriteLine("-----------");
@@ -27,10 +27,10 @@ namespace MarketProject
                 switch (option)
                 {
                     case 1:
-                        SubMenuHelper.ProductSubMenu();
+                        SubMenuHelper.ProductsSubMenu();
                         break;
                     case 2:
-                        SubMenuHelper.SaleSubMenu();
+                        SubMenuHelper.SalesSubMenu();
                         break;                 
                     case 0:
                         Console.WriteLine("Bye!");

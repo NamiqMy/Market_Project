@@ -8,6 +8,7 @@ namespace MarketProject.Common.Enum
 {
     public enum Category
     {
+        Non_Alcoholic_Beverages,
         Fruit_and_Vegetable,
         Alcoholic_Beverages,
         NonAlcoholic_Beverages,
@@ -15,5 +16,5 @@ namespace MarketProject.Common.Enum
         Clothing,
         Toys,
         Gastronomy,
-    }
+    };
 }

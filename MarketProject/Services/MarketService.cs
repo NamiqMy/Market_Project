@@ -1,47 +1,65 @@
 ﻿using MarketProject.Common.Enum;
 using MarketProject.Common.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
+using MarketProject.Common.Models.Exceptions;
 
 namespace MarketProject.Services
 {
     public class MarketService
     {
-        public List<Product> Products;
-        public List<Sale> Sales;
-
-        public MarketService() 
+        public List<Product> Products { get; set; } = new List<Product>
         {
-            Products = new();
-            Sales = new();
+            new Product()
+            {
+                Category = Category.NonAlcoholic_Beverages,
+                Count = 10,
+                Name = "Cola 1LT",
+                Price = 1.4m
+            },
+            new Product()
+            {
+                Category = Category.NonAlcoholic_Beverages,
+                Count = 10,
+                Name = "Fanta 1LT",
+                Price = 1.4m
+            },
+            new Product()
+            {
+                Category = Category.NonAlcoholic_Beverages,
+                Count = 10,
+                Name = "Sprite 1LT",
+                Price = 1.4m
+            }
+        };
+        public List<Sale> Sales { get; set; } = new List<Sale>();
+        public List<SaleItem> SaleItems { get; set; } = new List<SaleItem>();
+
+        public MarketService()
+        {
+
         }
 
         public List<Product> GetProducts()
         {
-            return Products;
+            return this.Products;
         }
 
-        public int AddProduct(string name, decimal price, int quantity, string category)
+        public int AddProduct(string name, decimal price, string category, int count)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new FormatException("Name is empty!");
-            
+
             if (price <= 0)
-                throw new FormatException("Please enter the correct amount!");
+                throw new FormatException("Price is lower than 0!");
 
-            if (quantity < 0)
-                throw new FormatException("The quantity of products can not be lower than zero!"); 
-            
             if (string.IsNullOrWhiteSpace(category))
-                throw new FormatException("Please add category of product");
+                throw new FormatException("Category is empty!");
 
-            bool isSuccessful = Enum.TryParse(typeof(Category),category, true, out object parsedCategory);
+            if (count < 0)
+                throw new FormatException("Count is lower than 0!");
+
+
+            bool isSuccessful
+                = Enum.TryParse(typeof(Category), category, true, out object parsedCategory);
 
             if (!isSuccessful)
             {
@@ -52,106 +70,129 @@ namespace MarketProject.Services
             {
                 Name = name,
                 Price = price,
-                Quantity = quantity,                
-                Category = (Category)parsedCategory
+                Category = (Category)parsedCategory,
+                Count = count,
             };
 
             Products.Add(newProduct);
-            return newProduct.Id; 
+            return newProduct.Id;
         }
 
-        public void EditProduct(int Id, string name, decimal price, int quantity, object category)
+        public void DeleteProduct(int Id)
+        {
+            var currentProduct = Products.FirstOrDefault(e => e.Id == Id);
+
+            if (currentProduct is not null)
+            {
+                Products.Remove(currentProduct);
+            }
+            else
+            {
+                throw new NotFoundException($"There is no any product to delete with Id : {Id}");
+            }
+        }
+
+        public bool CheckProductQuantity(int productId, int quantity)
+        {
+            var currentProduct = Products.FirstOrDefault(e => e.Id == productId);
+
+            if (currentProduct is not null)
+            {
+                return currentProduct.Count > quantity;
+            }
+            else
+            {
+                //return custom exception - NotInStockException
+                return false;
+            }
+        }
+
+        public void DecreaseProductQuantity(int productId, int quantity)
+        {
+            var currentProduct = Products.FirstOrDefault(e => e.Id == productId);
+
+            if (currentProduct is not null)
+            {
+                currentProduct.Count -= quantity;
+            }
+            else
+            {
+                //return custom exception - NotInStockException
+            }
+        }
+
+        public void IncreaseProductQuantity(int productId, int quantity)
+        {
+            var currentProduct = Products.FirstOrDefault(e => e.Id == productId);
+
+            if (currentProduct is not null)
+            {
+                currentProduct.Count += quantity;
+            }
+            else
+            {
+                //return custom exception - NotInStockException
+            }
+        }
+
+
+
+        public List<Product> ShowProductAccordingToCategory(Category selectedCategory)
+        {
+            var data = Products.Where(x => x.Category == selectedCategory).ToList();
+            return data;
+        }
+
+        public List<Product> ShowProductAccordingToPrice(int lowest, int highest)
+        {
+            var data = Products.Where(x => x.Price >= lowest && x.Price <= highest).ToList();
+            return data;
+        }
+
+        public List<Product> ShowProductAccordingToName(string inputname)
+        {
+            var data = Products.Where(x => x.Name == inputname).ToList();
+            return data;
+        }
+
+        public void UpdateProduct(int Id, string name, int count, object category, decimal price)
         {
             // Find the product to update
-            var Edit = Products.FirstOrDefault(x => x.Id == Id);
-            if (Edit == null)
+            var update = Products.FirstOrDefault(x => x.Id == Id);
+            if (update == null)
                 throw new Exception($"{Id} is invalid");
             if (price < 0)
                 throw new FormatException("Price is lower than 0!");
-            if (quantity < 0)
+            if (count < 0)
                 throw new FormatException("Invalid count!");
-            Edit.Name = name;
-            Edit.Price = price;
-            Edit.Quantity = quantity;           
+            update.Name = name;
+            update.Price = price;
+            update.Count = count;
+            update.Category = (Category)category;
+
         }
 
-        public int DeleteProduct(int Id)
+        public void AddSale(Sale sale)
         {
-            var existingProduct = Products.FirstOrDefault(x => x.Id == Id);
-            if (existingProduct == null)
-                throw new FormatException($"Product with code {Id} does not exist!");
-            Products = Products.Where(x => x.Id != Id).ToList();
+            foreach (var saleItem in sale.SaleItems)
+            {
+                var tmp = CheckProductQuantity(saleItem.Product.Id, saleItem.Count);
+                if (!tmp)
+                {
+                    //new custom exception - NotEnoughInStcokException
+                    throw new Exception($"Not enough {saleItem.Count} {saleItem.Product.Name} in Stock");
+                }
+            }
 
-            
-            return existingProduct.Id;            
-        }
+            Sales.Add(sale);
 
-        public int ShowAllProducts(string name, decimal price, int quantity, string category)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new FormatException("Name is empty!");            
-
-            if (price <= 0)
-                throw new FormatException("Please enter a positive price!");
-
-            if (quantity < 0)
-                throw new FormatException("The quantity of products cannot be lower than zero!");
-            
-            if (string.IsNullOrWhiteSpace(category))
-                throw new FormatException("Please add a category of the product!");
-
-            bool isSuccessful = Enum.TryParse(typeof(Category), category, true, out object parsedCategory);
-
-            if (!isSuccessful)
-                throw new InvalidDataException("Category not found!");                       
-
-            Console.WriteLine($"Sales for product '{name}' in category '{parsedCategory}' - {quantity}");
-
-            return quantity;
-        }
-
-
-        public List<Product> MenuShowProductsAccordingtoCategeries(Category selectedCategory)
-        {
-            var data = Product.Where(x => x.Category == selectedCategory).ToList();
-            return data;
-        }
-
-        public List<Product> MenuShowProductsAccordingToPriceRange(int lowestprice, int highestprice)
-        {
-            var data = Product.Where(x => x.lowestprice < x.highestprice).ToList();
-            return data;
-        }
-
-        public List<Product> MenuSHowProductToName(string inputname)
-        {
-            var data = Product.Where(x => x.Name == inputname).ToList();
-            return data;
-        }
-
-        public List<Sale> GetSales()
-        {
-            return Sales;
-        }
-
-        public int AddSale(int Id, string name, int quantity)
-        {
-
-            if (int.TryParse(name, out int id)) 
-            throw new ArgumentException("There are no any product with this ID: ");
-
-            if (string.IsNullOrWhiteSpace(name))
-                throw new FormatException("Name is empty!");
-
-            if (quantity < 0)
-                throw new FormatException("The quantity of products can not be lower than zero!");
-
-            
-
-            return id;
+            foreach (var saleItem in sale.SaleItems)
+            {
+                DecreaseProductQuantity(saleItem.Product.Id, saleItem.Count);
+            }
 
         }
+
     }
 
-    
 }

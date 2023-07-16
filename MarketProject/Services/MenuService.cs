@@ -1,16 +1,16 @@
 ﻿using ConsoleTables;
 using MarketProject.Common.Enum;
-using MarketProject.Common.Interface;
 using MarketProject.Common.Models;
 
 namespace MarketProject.Services
 {
-    public class MenuService : IMenuService
+    public class MenuService
     {
         private static MarketService marketService = new();
 
         #region Product
 
+        //We create the products' table which will be added to it.
         public static void MenuProducts()
         {
             try
@@ -41,6 +41,7 @@ namespace MarketProject.Services
             }
         }
 
+        //We will add products to the Product table.
         public static void MenuAddProduct()
         {
             try
@@ -72,6 +73,7 @@ namespace MarketProject.Services
             }
         }
 
+
         public static void MenuDeleteProduct()
         {
             try
@@ -94,7 +96,6 @@ namespace MarketProject.Services
         {
             try
             {
-
                 Console.WriteLine("Please, select category: ");
                 foreach (Category category in Enum.GetValues(typeof(Category)))
                 {
@@ -206,6 +207,7 @@ namespace MarketProject.Services
             }
         }
 
+        //This method allows us to change the parameters of product.
         public static void UpdateProduct()
         {
             try
@@ -256,6 +258,7 @@ namespace MarketProject.Services
 
         #endregion
 
+
         #region Sales
         public static void MenuAddSales()
         {
@@ -291,29 +294,15 @@ namespace MarketProject.Services
 
             Sale sale = new Sale(amountOfCurrentSaleItems, saleItems);
 
-            marketService.AddSale(sale);
-
-
-            //Product product = new Product("kola", 4, Category.A, 3, 0);
-            //List<SaleItem> saleItems = new List<SaleItem>();
-            //SaleItem saleItem = new SaleItem(1, product, 2);
-            //saleItems.Add(saleItem);
-
+            marketService.AddSale(sale);            
         }
 
         public static void MenuShowAllSales()
         {
-            var table = new ConsoleTable("Number", "Amount",
-                   "SaleTime");
+            var table = new ConsoleTable("Number", "Amount", "SaleTime");
 
             var sales = marketService.Sales;
-
-            //if (sales.Count == 0)
-            //{
-            //    Console.WriteLine("No product's yet.");
-            //    return;
-            //}
-
+            
             foreach (var sale in sales)
             {
                 table.AddRow(sale.Number, sale.Amount, sale.SaleTime);
@@ -324,8 +313,7 @@ namespace MarketProject.Services
 
         public static void MenuShowAllSalesByTimeInterval(DateTime fromDate, DateTime toDate)
         {
-            var table = new ConsoleTable("Id", "Amount",
-                   "SaleTime");
+            var table = new ConsoleTable("Id", "Amount", "SaleTime");
 
             var sales = marketService.Sales.Where(i => i.SaleTime >= fromDate && i.SaleTime <= toDate).ToList();
 
@@ -345,9 +333,10 @@ namespace MarketProject.Services
 
         public static void MenuShowAllSalesByPriceInterval(decimal fromPrice, decimal toPrice)
         {
-            var table = new ConsoleTable("Id", "Amount",
-                   "SaleTime");
-            var sales = marketService.Sales.Where(i => i.SaleItems.Select(e => e.Product.Price * e.Count).Sum() >= fromPrice && i.SaleItems.Select(e => e.Product.Price * e.Count).Sum() <= toPrice).ToList();
+            var table = new ConsoleTable("Id", "Amount", "SaleTime");
+
+            var sales = marketService.Sales.Where(i => i.SaleItems.Select(e => e.Product.Price * e.Count)
+            .Sum() >= fromPrice && i.SaleItems.Select(e => e.Product.Price * e.Count).Sum() <= toPrice).ToList();
 
             if (sales.Count == 0)
             {

@@ -1,35 +1,13 @@
 ﻿using MarketProject.Common.Enum;
+using MarketProject.Common.Interface;
 using MarketProject.Common.Models;
 using MarketProject.Common.Models.Exceptions;
 
 namespace MarketProject.Services
 {
-    public class MarketService
+    public class MarketService : IMarketService
     {
-        public List<Product> Products { get; set; } = new List<Product>
-        {
-            new Product()
-            {
-                Category = Category.NonAlcoholic_Beverages,
-                Count = 10,
-                Name = "Cola 1LT",
-                Price = 1.4m
-            },
-            new Product()
-            {
-                Category = Category.NonAlcoholic_Beverages,
-                Count = 10,
-                Name = "Fanta 1LT",
-                Price = 1.4m
-            },
-            new Product()
-            {
-                Category = Category.NonAlcoholic_Beverages,
-                Count = 10,
-                Name = "Sprite 1LT",
-                Price = 1.4m
-            }
-        };
+        public List<Product> Products { get; set; } = new List<Product>();      
         public List<Sale> Sales { get; set; } = new List<Sale>();
         public List<SaleItem> SaleItems { get; set; } = new List<SaleItem>();
 
@@ -43,6 +21,7 @@ namespace MarketProject.Services
             return this.Products;
         }
 
+        // This method is for checking added products .
         public int AddProduct(string name, decimal price, string category, int count)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -55,8 +34,7 @@ namespace MarketProject.Services
                 throw new FormatException("Category is empty!");
 
             if (count < 0)
-                throw new FormatException("Count is lower than 0!");
-
+                throw new FormatException("Count is lower than 0!");            
 
             bool isSuccessful
                 = Enum.TryParse(typeof(Category), category, true, out object parsedCategory);
@@ -78,6 +56,7 @@ namespace MarketProject.Services
             return newProduct.Id;
         }
 
+        //This method is for deleting product which has been added to table.
         public void DeleteProduct(int Id)
         {
             var currentProduct = Products.FirstOrDefault(e => e.Id == Id);
@@ -101,9 +80,8 @@ namespace MarketProject.Services
                 return currentProduct.Count > quantity;
             }
             else
-            {
-                //return custom exception - NotInStockException
-                return false;
+            {                
+                throw new NotFoundException($"There is no any product with that Id : {productId}");               
             }
         }
 
@@ -116,8 +94,8 @@ namespace MarketProject.Services
                 currentProduct.Count -= quantity;
             }
             else
-            {
-                //return custom exception - NotInStockException
+            {                
+                throw new NotFoundException($"There is no any product to decrease with Id : {productId}");
             }
         }
 
@@ -130,8 +108,8 @@ namespace MarketProject.Services
                 currentProduct.Count += quantity;
             }
             else
-            {
-                //return custom exception - NotInStockException
+            {                
+                throw new NotFoundException($"There is no any product to increase with Id : {productId}");
             }
         }
 
@@ -169,7 +147,6 @@ namespace MarketProject.Services
             update.Price = price;
             update.Count = count;
             update.Category = (Category)category;
-
         }
 
         public void AddSale(Sale sale)
@@ -178,8 +155,7 @@ namespace MarketProject.Services
             {
                 var tmp = CheckProductQuantity(saleItem.Product.Id, saleItem.Count);
                 if (!tmp)
-                {
-                    //new custom exception - NotEnoughInStcokException
+                {                    
                     throw new Exception($"Not enough {saleItem.Count} {saleItem.Product.Name} in Stock");
                 }
             }
@@ -193,6 +169,10 @@ namespace MarketProject.Services
 
         }
 
+        internal int AddProduct(string? name, decimal price, object category, int count)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

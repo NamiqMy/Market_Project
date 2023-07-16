@@ -1,9 +1,4 @@
 ﻿using MarketProject.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarketProject
 {
@@ -102,37 +97,46 @@ namespace MarketProject
                 switch (option)
                 {
                     case 1:
-                        Console.WriteLine("Added sale");
+                        Console.Clear();
                         MenuService.MenuAddSales();
+                        Console.WriteLine("Added sale");
                         break;
                     case 2:
-                        Console.WriteLine("Refund sale");
+                        Console.Clear();
                         MenuService.RefundProduct();
+                        Console.WriteLine("Refund sale");
                         break;
                     case 3:
-                        Console.WriteLine("Removed sale");
+                        Console.Clear();
                         MenuService.RemoveSale();
+                        Console.WriteLine("Removed sale");
                         break;
                     case 4:
-                        Console.WriteLine("Showing all sales");
+                        Console.Clear();
                         MenuService.MenuShowAllSales();
+                        Console.WriteLine("Showing all sales");
                         break;
                     case 5:
-                        Console.WriteLine("Showing sales according to their time interval");
+                        Console.Clear();
                         MenuService.ShowSaleByTimeInterval();
+                        Console.WriteLine("Showing sales according to their time interval");
                         break;
                     case 6:
-                        Console.WriteLine("Showing sales according to their price interval");
+                        Console.Clear();
                         MenuService.ShowSaleByPriceInterval();
+                        Console.WriteLine("Showing sales according to their price interval");
                         break;
                     case 7:
+                        Console.Clear();
+                        MenuService.ShowSaleByTimeInterval();
                         Console.WriteLine("Showing sales on the given date");
                         break;
                     case 8:
-                        Console.WriteLine("Show sales according to their numbers");
+                        Console.Clear();
                         MenuService.MenuShowAllSales();
                         var currentSaleId = Int32.Parse(Console.ReadLine());
                         MenuService.ShowSaleDetailsById(currentSaleId);
+                        Console.WriteLine("Show sales according to their numbers");                        
                         break;
                     case 0:
                         break;

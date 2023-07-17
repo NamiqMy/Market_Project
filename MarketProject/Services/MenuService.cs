@@ -10,7 +10,7 @@ namespace MarketProject.Services
 
         #region Product
 
-        //We create the products' table which will be added to it.
+        //We create the products' table which products will be added to it.
         public static void MenuProducts()
         {
             try

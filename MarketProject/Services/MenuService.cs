@@ -41,7 +41,7 @@ namespace MarketProject.Services
             }
         }
 
-        //We will add products to the Product table.
+        //In this method we will add products to the Product table.
         public static void MenuAddProduct()
         {
             try
@@ -73,7 +73,7 @@ namespace MarketProject.Services
             }
         }
 
-
+        //In this method we will delete the products from the Product table.
         public static void MenuDeleteProduct()
         {
             try
@@ -92,6 +92,7 @@ namespace MarketProject.Services
             }
         }
 
+        //In this method we will show the products according to their Category in the Product table.  
         public static void MenuShowProductAccordingToCategory()
         {
             try
@@ -138,6 +139,7 @@ namespace MarketProject.Services
             }
         }
 
+        //In this method we will show the products according to their Price Range in the Product table.
         public static void MenuProductAccordingToPriceInterval()
         {
             try
@@ -177,6 +179,7 @@ namespace MarketProject.Services
             }
         }
 
+        //In this method we will show the products according to their Name in the Product table.
         public static void MenuProductAccordingToName()
         {
             try
@@ -207,7 +210,7 @@ namespace MarketProject.Services
             }
         }
 
-        //This method allows us to change the parameters of product.
+        //This method allows us to change the parameters of product which is added to the Product table.    
         public static void UpdateProduct()
         {
             try
@@ -218,7 +221,7 @@ namespace MarketProject.Services
                 Console.WriteLine("Enter the new name:");
                 string newName = Console.ReadLine();
 
-                Console.WriteLine("Enter the new quantity:");
+                Console.WriteLine("Enter the new count:");
                 int newQuantity = int.Parse(Console.ReadLine());
                 if (newQuantity < 0)
                 {
@@ -260,6 +263,8 @@ namespace MarketProject.Services
 
 
         #region Sales
+
+        //In this method we sale the product which has been added to the Product Table.
         public static void MenuAddSales()
         {
             bool showProductMenu = true;
@@ -297,6 +302,7 @@ namespace MarketProject.Services
             marketService.AddSale(sale);            
         }
 
+        //In this method we show the all sales after some sales.
         public static void MenuShowAllSales()
         {
             var table = new ConsoleTable("Number", "Amount", "SaleTime");
@@ -311,6 +317,7 @@ namespace MarketProject.Services
             table.Write();
         }
 
+        //We show the sales according to time range.
         public static void MenuShowAllSalesByTimeInterval(DateTime fromDate, DateTime toDate)
         {
             var table = new ConsoleTable("Id", "Amount", "SaleTime");
@@ -331,6 +338,7 @@ namespace MarketProject.Services
             table.Write();
         }
 
+        //We show the sales according to Price range.
         public static void MenuShowAllSalesByPriceInterval(decimal fromPrice, decimal toPrice)
         {
             var table = new ConsoleTable("Id", "Amount", "SaleTime");
@@ -352,6 +360,7 @@ namespace MarketProject.Services
             table.Write();
         }
 
+        //We can see the detailed information about sales in this method.
         public static void ShowSaleDetailsById(int saleId)
         {
 
@@ -379,6 +388,7 @@ namespace MarketProject.Services
             table.Write();
         }
 
+        //With the help of this mehtod we can bring our product back to the Product Table.
         public static void RefundProduct()
         {
             MenuShowAllSales();
@@ -386,11 +396,22 @@ namespace MarketProject.Services
             var currentSaleNumber = Int32.Parse(Console.ReadLine());
             var currentSale = marketService.Sales.FirstOrDefault(e => e.Number == currentSaleNumber);
 
+            if (currentSaleNumber < 0)
+            {
+                throw new Exception("Sale number must be positive");
+            }
+
             if (currentSale is not null)
             {
                 ShowSaleDetailsById(currentSaleNumber);
                 Console.WriteLine("Choose Product Id for refund : ");
                 var currentProductId = Int32.Parse(Console.ReadLine());
+
+                if (currentProductId < 0)
+                {
+                    throw new Exception("Product Id must be positive");
+                }
+
                 var currentSaleItem = currentSale.SaleItems.FirstOrDefault(i => i.Id == currentProductId);
                 var currentProductQuantityInSale = currentSale.SaleItems.FirstOrDefault(i => i.Id == currentProductId).Count;
 
@@ -410,44 +431,79 @@ namespace MarketProject.Services
            
         }
 
+        //With the help of this method we can erase the sale from sold products table.
         public static void RemoveSale()
         {
-            MenuShowAllSales();
-            Console.WriteLine("Choose sale number for remove : ");
-            var currentSaleNumber = Int32.Parse(Console.ReadLine());
-            var currentSale = marketService.Sales.FirstOrDefault(e => e.Number == currentSaleNumber);
+            try
+            {
+                MenuShowAllSales();
+                Console.WriteLine("Choose sale number for remove : ");
+                var currentSaleNumber = Int32.Parse(Console.ReadLine());
+                if (currentSaleNumber < 0)
+                {
+                    throw new Exception("Sale number must be positive");
+                }
+                var currentSale = marketService.Sales.FirstOrDefault(e => e.Number == currentSaleNumber);
 
-            marketService.Sales.Remove(currentSale);
+                marketService.Sales.Remove(currentSale);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
+            }
         }
 
+        //This method shows us the time interval of sold products.
         public static void ShowSaleByTimeInterval()
         {
-            Console.WriteLine("Enter from date : (dd/mm/yyyy)");
-            var fromDate = DateTime.Parse(Console.ReadLine());
-            Console.WriteLine("Enter to date : (dd/mm/yyyy)");
-            var toDate = DateTime.Parse(Console.ReadLine());
-
-            if (toDate <= fromDate)
+            try
             {
-                throw new Exception("FromDate cannot be lower from ToDate");
-            }
+                Console.WriteLine("Enter from date : (dd/mm/yyyy)");
+                var fromDate = DateTime.Parse(Console.ReadLine());
+                Console.WriteLine("Enter to date : (dd/mm/yyyy)");
+                var toDate = DateTime.Parse(Console.ReadLine());
 
-            MenuShowAllSalesByTimeInterval(fromDate, toDate);
+                if (toDate <= fromDate)
+                {
+                    throw new Exception("FromDate cannot be lower from ToDate");
+                }
+
+                MenuShowAllSalesByTimeInterval(fromDate, toDate);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
+            }
         }
 
+        //This method shows us the Price interval of sold products.
         public static void ShowSaleByPriceInterval()
         {
-            Console.WriteLine("Enter from price : ");
-            var fromPrice = Decimal.Parse(Console.ReadLine());
-            Console.WriteLine("Enter to price : ");
-            var toPrice = Decimal.Parse(Console.ReadLine());
-
-            if (toPrice <= fromPrice)
+            try
             {
-                throw new Exception("FromPrice cannot be lower from ToPrice");
+                Console.WriteLine("Enter from price : ");
+                var fromPrice = Decimal.Parse(Console.ReadLine());
+                Console.WriteLine("Enter to price : ");
+                var toPrice = Decimal.Parse(Console.ReadLine());
+
+                if (fromPrice <= 0 && toPrice <= 0)
+                {
+                    throw new Exception("Price must be positive");
+                }
+                if (toPrice <= fromPrice)
+                {
+                    throw new Exception("FromPrice cannot be lower from ToPrice");
+                }
+
+                MenuShowAllSalesByPriceInterval(fromPrice, toPrice);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
             }
 
-            MenuShowAllSalesByPriceInterval(fromPrice, toPrice);
         }
         #endregion
 

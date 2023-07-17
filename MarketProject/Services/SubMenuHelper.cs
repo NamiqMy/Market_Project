@@ -4,6 +4,9 @@ namespace MarketProject
 {
     public static class SubMenuHelper
     {
+        /// <summary>
+        /// In this method we add, update, delete and show products detailed information.
+        /// </summary>
         public static void ProductsSubMenu()
         {
             Console.Clear();
@@ -32,6 +35,7 @@ namespace MarketProject
                 switch (option)
                 {
                     case 1:
+                        Console.Clear();
                         MenuService.MenuAddProduct();
                         Console.WriteLine("Added product");
                         break;
@@ -44,6 +48,7 @@ namespace MarketProject
                         Console.WriteLine("Deleted product");
                         break;
                     case 4:
+                        Console.Clear();
                         MenuService.MenuProducts();
                         Console.WriteLine("Showing all products");
                         break;
@@ -69,6 +74,9 @@ namespace MarketProject
             } while (option != 0);
         }
 
+        /// <summary>
+        /// In this method we add, refund, remove and show sales detailed information.
+        /// </summary>
         public static void SalesSubMenu()
         {
             Console.Clear();
@@ -76,8 +84,8 @@ namespace MarketProject
             do
             {
                 Console.WriteLine("1. Add sale");
-                Console.WriteLine("2. Decline sale");
-                Console.WriteLine("3. Remove sale");
+                Console.WriteLine("2. Refund the sale");
+                Console.WriteLine("3. Remove the sale");
                 Console.WriteLine("4. Show all sales");
                 Console.WriteLine("5. Show sales according to their time interval");
                 Console.WriteLine("6. Show sales according to their price interval");
@@ -101,13 +109,11 @@ namespace MarketProject
                         MenuService.MenuAddSales();
                         Console.WriteLine("Added sale");
                         break;
-                    case 2:
-                        Console.Clear();
+                    case 2:                        
                         MenuService.RefundProduct();
                         Console.WriteLine("Refund sale");
                         break;
-                    case 3:
-                        Console.Clear();
+                    case 3:                        
                         MenuService.RemoveSale();
                         Console.WriteLine("Removed sale");
                         break;
@@ -116,24 +122,22 @@ namespace MarketProject
                         MenuService.MenuShowAllSales();
                         Console.WriteLine("Showing all sales");
                         break;
-                    case 5:
-                        Console.Clear();
+                    case 5:                        
                         MenuService.ShowSaleByTimeInterval();
                         Console.WriteLine("Showing sales according to their time interval");
                         break;
                     case 6:
-                        Console.Clear();
                         MenuService.ShowSaleByPriceInterval();
                         Console.WriteLine("Showing sales according to their price interval");
                         break;
                     case 7:
-                        Console.Clear();
                         MenuService.ShowSaleByTimeInterval();
                         Console.WriteLine("Showing sales on the given date");
                         break;
                     case 8:
                         Console.Clear();
-                        MenuService.MenuShowAllSales();
+                        Console.WriteLine("Please select sale number: ");
+                        MenuService.MenuShowAllSales();                        
                         var currentSaleId = Int32.Parse(Console.ReadLine());
                         MenuService.ShowSaleDetailsById(currentSaleId);
                         Console.WriteLine("Show sales according to their numbers");                        

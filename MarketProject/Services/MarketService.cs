@@ -21,7 +21,7 @@ namespace MarketProject.Services
             return this.Products;
         }
 
-        // This method is for checking added products .
+        // This method is for checking added products if there are exceptions.
         public int AddProduct(string name, decimal price, string category, int count)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -56,7 +56,7 @@ namespace MarketProject.Services
             return newProduct.Id;
         }
 
-        //This method is for deleting product which has been added to table.
+        //This method is for checking deleted products' exceptions
         public void DeleteProduct(int Id)
         {
             var currentProduct = Products.FirstOrDefault(e => e.Id == Id);
@@ -71,6 +71,7 @@ namespace MarketProject.Services
             }
         }
 
+        //This method shows the quantity of product after deletion and sale.
         public bool CheckProductQuantity(int productId, int quantity)
         {
             var currentProduct = Products.FirstOrDefault(e => e.Id == productId);
@@ -85,6 +86,7 @@ namespace MarketProject.Services
             }
         }
 
+        //This method make to decrease quantity of product in table after deletion and sale.
         public void DecreaseProductQuantity(int productId, int quantity)
         {
             var currentProduct = Products.FirstOrDefault(e => e.Id == productId);
@@ -99,6 +101,7 @@ namespace MarketProject.Services
             }
         }
 
+        //This method make to increase quantity of product in table after refund.
         public void IncreaseProductQuantity(int productId, int quantity)
         {
             var currentProduct = Products.FirstOrDefault(e => e.Id == productId);
@@ -114,25 +117,28 @@ namespace MarketProject.Services
         }
 
 
-
+        //This method shows the all listed products according to category which has already been added.
         public List<Product> ShowProductAccordingToCategory(Category selectedCategory)
         {
             var data = Products.Where(x => x.Category == selectedCategory).ToList();
             return data;
         }
 
+        //This method shows the all listed products according to Price range which has already been added.
         public List<Product> ShowProductAccordingToPrice(int lowest, int highest)
         {
             var data = Products.Where(x => x.Price >= lowest && x.Price <= highest).ToList();
             return data;
         }
 
+        //This method shows the all listed products according to Name which has already been added.
         public List<Product> ShowProductAccordingToName(string inputname)
         {
             var data = Products.Where(x => x.Name == inputname).ToList();
             return data;
         }
 
+        //This method allows us to check if there some exceptions. 
         public void UpdateProduct(int Id, string name, int count, object category, decimal price)
         {
             // Find the product to update
@@ -149,6 +155,7 @@ namespace MarketProject.Services
             update.Category = (Category)category;
         }
 
+        //This method shows us the quantity of sold products and exceptions.
         public void AddSale(Sale sale)
         {
             foreach (var saleItem in sale.SaleItems)
@@ -169,10 +176,7 @@ namespace MarketProject.Services
 
         }
 
-        internal int AddProduct(string? name, decimal price, object category, int count)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 
 }
